@@ -36,7 +36,7 @@ CREATE TABLE Meal (
     id INT PRIMARY KEY AUTO_INCREMENT,
     meal_type_id INT,
     restaurant_id INT,
-    price DECIMAL(10, 2),
+    base_price DECIMAL(10, 2),
     meal_name VARCHAR(100),
     FOREIGN KEY (meal_type_id) REFERENCES Meal_Type(id),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id)
@@ -62,4 +62,22 @@ CREATE TABLE Employment (
     FOREIGN KEY (employee_id) REFERENCES Employee(id),
     FOREIGN KEY (employee_position_id) REFERENCES Employee_Position(id),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id)
+);
+
+-- Nowa tabela dla klientów
+CREATE TABLE Client (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(100),
+    last_name VARCHAR(255),
+    email VARCHAR(100) UNIQUE
+);
+
+-- Tabela przechowująca zindywidualizowane ceny dla klientów
+CREATE TABLE Meal_Price (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    meal_id INT,
+    client_id INT,
+    custom_price DECIMAL(10, 2),
+    FOREIGN KEY (meal_id) REFERENCES Meal(id),
+    FOREIGN KEY (client_id) REFERENCES Client(id)
 );
